@@ -25,3 +25,5 @@ share/jupyter/
 
 # Cache
 data_cache.db
+etc/
+pyvenv.cfg
