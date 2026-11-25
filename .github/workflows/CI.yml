@@ -1,0 +1,27 @@
+name: CI-Securite
+ 
+on: [push, pull_request]
+ 
+jobs:
+  tests-et-securite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+ 
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+ 
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt pytest bandit pip-audit
+ 
+      - name: Tests unitaires
+        run: python -m pytest dashboard_meteo_qualite_air_boilerplate.py
+ 
+      - name: Analyse de sécurité du code (Bandit)
+        run: bandit dashboard_meteo_qualite_air_boilerplate.py
+ 
+      - name: Audit des dépendances
+        run: pip-audit -r requirements.txt
